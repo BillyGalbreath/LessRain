@@ -12,6 +12,9 @@ I created this plugin due to popular demand on my server. Nobody really wanted t
 * Optional world exclusion
 \\\\
 === Changelog ===
+* Version 2.0
+** Quaz3l Forked Here.
+** Fixed Listeners
 * Version 1.6
 ** Updated config handler to keep up with newest bukkit features
 * Version 1.5.1
