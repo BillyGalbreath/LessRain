@@ -6,20 +6,19 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 /** Manages loading or creating the configuration file for SeattleSummer
  * 
- * @author Fritz
+ * @author Quaz3l
  *
  */
 public class SeattleSummerConfigHandler {
 
     private Integer configRainDuration;
-    private List<String> configExcludedWorlds = new ArrayList<String>();
+    private List<Object> configExcludedWorlds = new ArrayList<Object>();
     private static SeattleSummer plugin;
 
     /** Loads configuration, creates default config file if none exists.
      * 
      * @param instance The main SeattleSummer plugin instance
      */
-    @SuppressWarnings("unchecked")
     public SeattleSummerConfigHandler (SeattleSummer instance) {
         plugin = instance;
 

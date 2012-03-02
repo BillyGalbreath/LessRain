@@ -1,22 +1,21 @@
 package me.fritz.seattlesummer;
 
 import java.util.logging.Logger;
-import org.bukkit.event.Event;
-import org.bukkit.plugin.PluginManager;
+
 import org.bukkit.plugin.java.JavaPlugin;
 
 /** Main SeattleSummer Class
  *  
  * @Author Fritz
- * @version 1.5.1
+ * @version 2.0.0
  */
 public class SeattleSummer extends JavaPlugin{
-
+	public final String prefix = "[qQuests] ";
+	
     /**
      * Config object
      */
     public SeattleSummerConfigHandler config;
-    private SeattleSummerWeatherListener weatherListener = new SeattleSummerWeatherListener(this);
     static final Logger log = Logger.getLogger("Minecraft");
 
     /** Called when the plugin is enabled
@@ -25,16 +24,15 @@ public class SeattleSummer extends JavaPlugin{
     public void onEnable() {
         config = new SeattleSummerConfigHandler(this);
 
-        PluginManager pm = this.getServer().getPluginManager();
-        pm.registerEvent(Event.Type.WEATHER_CHANGE, weatherListener, Event.Priority.Normal, this);
+        getServer().getPluginManager().registerEvents(new SeattleSummerWeatherListener(this), this);
 
-        log.info("[SeattleSummer] plugin enabled.");
+        log.info(this.prefix + "v" + this.getDescription().getVersion() + " by Quaz3l and Fritz: Enabled");
     }
 
     /** Called when the plugin is disabled
      */
     @Override
     public void onDisable() {
-        log.info("[SeattleSummer] plugin disabled.");
+    	log.info(this.prefix + "v" + this.getDescription().getVersion() + " by Quaz3l and Fritz: Disabled");
     }
 }
