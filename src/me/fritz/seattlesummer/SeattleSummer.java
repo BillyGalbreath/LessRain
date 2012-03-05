@@ -10,7 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @version 2.0.0
  */
 public class SeattleSummer extends JavaPlugin{
-	public final String prefix = "[qQuests] ";
+	public final String prefix = "[SeattleSummer] ";
 	
     /**
      * Config object
