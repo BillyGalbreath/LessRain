@@ -60,10 +60,11 @@ public class LessRain extends JavaPlugin implements Listener {
         if (event.toWeatherState()) {
             Long lastStorm = this.lastStorm.get(world);
             if (lastStorm != null) {
-                if (lastStorm + getConfig().getInt("minDurationBetweenStorms", 1800) * 1000 < System.currentTimeMillis()) {
+                long now = System.currentTimeMillis();
+                if (lastStorm + getConfig().getInt("minDurationBetweenStorms", 1800) * 1000 < now) {
                     if (getConfig().getBoolean("debug")) {
                         getLogger().info("Not allowing storm to start in world: " + world.getName());
-                        getLogger().info("  Last storm ended " + (lastStorm * 1000) + " seconds ago");
+                        getLogger().info("  Last storm ended " + ((now - lastStorm) * 1000) + " seconds ago");
                     }
                     event.setCancelled(true);
                     return;
