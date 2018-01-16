@@ -41,10 +41,13 @@ public class LessRain extends JavaPlugin implements Listener {
             return;
         }
         if (event.toWeatherState()) {
-            Long lastStorm = this.lastStorm.remove(world);
-            if (lastStorm != null && lastStorm + getConfig().getInt("minDurationBetweenStorms", 1800) * 1000 < System.currentTimeMillis()) {
-                event.setCancelled(true);
-                return;
+            Long lastStorm = this.lastStorm.get(world);
+            if (lastStorm != null) {
+                if (lastStorm + getConfig().getInt("minDurationBetweenStorms", 1800) * 1000 < System.currentTimeMillis()) {
+                    event.setCancelled(true);
+                    return;
+                }
+                this.lastStorm.remove(world);
             }
             stopTasks.put(world, new BukkitRunnable() {
                 @Override
