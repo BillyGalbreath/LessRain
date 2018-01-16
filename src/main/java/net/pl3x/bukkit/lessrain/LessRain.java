@@ -70,17 +70,22 @@ public class LessRain extends JavaPlugin implements Listener {
                 }
                 this.lastStorm.remove(world);
             }
+            int maxDuration = (getConfig().getInt("maxDurationOfStorms", 300) * 20);
+            if (getConfig().getBoolean("debug")) {
+                getLogger().info("Storm has started in world: " + world.getName());
+                getLogger().info("  Storm will be forced stopped in " + maxDuration + " seconds");
+            }
             stopTasks.put(world, new BukkitRunnable() {
                 @Override
                 public void run() {
                     if (getConfig().getBoolean("debug")) {
                         getLogger().info("Force stopping storm in world: " + world.getName());
-                        getLogger().info("  Storm started " + (getConfig().getInt("maxDurationOfStorms", 300) * 20) + " seconds ago");
+                        getLogger().info("  Storm started " + maxDuration + " seconds ago");
                     }
                     world.setStorm(false);
                     stopTasks.remove(world);
                 }
-            }.runTaskLater(this, getConfig().getInt("maxDurationOfStorms", 300) * 20));
+            }.runTaskLater(this, maxDuration));
         } else {
             lastStorm.put(world, System.currentTimeMillis());
             BukkitTask task = stopTasks.remove(world);
