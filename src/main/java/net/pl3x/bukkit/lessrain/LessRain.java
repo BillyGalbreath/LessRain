@@ -13,7 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LessRain extends JavaPlugin implements Listener {
-    private final Map<World, BukkitTask> tasks = new HashMap<>();
+    private final Map<World, BukkitTask> stopTasks = new HashMap<>();
+    private final Map<World, Long> lastStorm = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -24,12 +25,12 @@ public class LessRain extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
-        tasks.forEach((world, task) -> {
+        stopTasks.forEach((world, task) -> {
             if (task != null && !task.isCancelled()) {
                 task.cancel();
             }
         });
-        tasks.clear();
+        stopTasks.clear();
         getLogger().info(getName() + " disabled");
     }
 
@@ -40,16 +41,22 @@ public class LessRain extends JavaPlugin implements Listener {
             return;
         }
         if (event.toWeatherState()) {
-            tasks.put(world, new BukkitRunnable() {
+            Long lastStorm = this.lastStorm.remove(world);
+            if (lastStorm != null && lastStorm + getConfig().getInt("minDurationBetweenStorms", 1800) * 1000 < System.currentTimeMillis()) {
+                event.setCancelled(true);
+                return;
+            }
+            stopTasks.put(world, new BukkitRunnable() {
                 @Override
                 public void run() {
                     getLogger().info("Force stopping rain in world: " + world.getName());
                     world.setStorm(false);
-                    tasks.remove(world);
+                    stopTasks.remove(world);
                 }
-            }.runTaskLater(this, getConfig().getInt("maxDuration", 300) * 20));
+            }.runTaskLater(this, getConfig().getInt("maxDurationOfStorms", 300) * 20));
         } else {
-            BukkitTask task = tasks.remove(world);
+            lastStorm.put(world, System.currentTimeMillis());
+            BukkitTask task = stopTasks.remove(world);
             if (task != null && !task.isCancelled()) {
                 task.cancel();
             }

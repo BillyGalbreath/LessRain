@@ -1,5 +1,10 @@
 # Maximum rain duration (in seconds)
-maxDuration: 300
+# Default 300 (5 minutes)
+maxDurationOfStorms: 300
+
+# Minimum duration between storms (in seconds)
+# Default 1800 (30 minutes)
+minDurationBetweenStorms: 1800
 
 # List of worlds that you do not want to restrict rain on (CaSe SeNsItIvE)
 excludedWorlds: 
