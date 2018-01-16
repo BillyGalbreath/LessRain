@@ -1,0 +1,5 @@
+name: ${project.artifactId}
+main: ${project.groupId}.Pl3xIcons
+version: ${project.version}
+author: BillyGalbreath
+description: ${project.artifactId} Bukkit Plugin

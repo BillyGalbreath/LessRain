@@ -1,0 +1,7 @@
+# Maximum rain duration (in seconds)
+maxDuration: 300
+
+# List of worlds that you do not want to restrict rain on (CaSe SeNsItIvE)
+excludedWorlds: 
+- world_nether
+- world_the_end

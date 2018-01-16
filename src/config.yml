@@ -1,6 +1,0 @@
-# Maximum rain duration (in seconds)
-maxDuration: 300
-
-# List of worlds that you do not want to restrict rain on. (remember, spaces are important in yaml)
-excludedWorlds: 
-- world_nether
