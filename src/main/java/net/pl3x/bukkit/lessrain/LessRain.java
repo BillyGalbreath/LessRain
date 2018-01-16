@@ -24,6 +24,12 @@ public class LessRain extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
+        tasks.forEach((world, task) -> {
+            if (task != null && !task.isCancelled()) {
+                task.cancel();
+            }
+        });
+        tasks.clear();
         getLogger().info(getName() + " disabled");
     }
 
@@ -39,6 +45,7 @@ public class LessRain extends JavaPlugin implements Listener {
                 public void run() {
                     getLogger().info("Force stopping rain in world: " + world.getName());
                     world.setStorm(false);
+                    tasks.remove(world);
                 }
             }.runTaskLater(this, getConfig().getInt("maxDuration", 300) * 20));
         } else {
