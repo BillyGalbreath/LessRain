@@ -1,5 +1,5 @@
 name: ${project.artifactId}
-main: ${project.groupId}.Pl3xIcons
+main: ${project.groupId}.${project.artifactId}
 version: ${project.version}
 author: BillyGalbreath
 description: ${project.artifactId} Bukkit Plugin
