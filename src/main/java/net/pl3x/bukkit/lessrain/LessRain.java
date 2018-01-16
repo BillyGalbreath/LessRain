@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -41,7 +42,10 @@ public class LessRain extends JavaPlugin implements Listener {
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
         if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
             reloadConfig();
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aLessRain config reloaded"));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7[&aLessRain&7]&e Config reloaded"));
+            if (!(sender instanceof Player)) {
+                getLogger().info("Config reloaded");
+            }
             return true;
         }
         return false;
@@ -57,6 +61,10 @@ public class LessRain extends JavaPlugin implements Listener {
             Long lastStorm = this.lastStorm.get(world);
             if (lastStorm != null) {
                 if (lastStorm + getConfig().getInt("minDurationBetweenStorms", 1800) * 1000 < System.currentTimeMillis()) {
+                    if (getConfig().getBoolean("debug")) {
+                        getLogger().info("Not allowing storm to start in world: " + world.getName());
+                        getLogger().info("  Last storm ended " + (lastStorm * 1000) + " seconds ago");
+                    }
                     event.setCancelled(true);
                     return;
                 }
@@ -65,7 +73,10 @@ public class LessRain extends JavaPlugin implements Listener {
             stopTasks.put(world, new BukkitRunnable() {
                 @Override
                 public void run() {
-                    getLogger().info("Force stopping rain in world: " + world.getName());
+                    if (getConfig().getBoolean("debug")) {
+                        getLogger().info("Force stopping storm in world: " + world.getName());
+                        getLogger().info("  Storm started " + (getConfig().getInt("maxDurationOfStorms", 300) * 20) + " seconds ago");
+                    }
                     world.setStorm(false);
                     stopTasks.remove(world);
                 }

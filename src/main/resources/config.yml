@@ -1,3 +1,7 @@
+# Debug mode
+# This will log in console when storms are forced stopped or cancelled
+debug: false
+
 # Maximum rain duration (in seconds)
 # Default 300 (5 minutes)
 maxDurationOfStorms: 300
