@@ -3,3 +3,14 @@ main: ${project.groupId}.Pl3xIcons
 version: ${project.version}
 author: BillyGalbreath
 description: ${project.artifactId} Bukkit Plugin
+
+commands:
+  lessrain:
+    description: Reload config
+    permissions: command.lessrain
+    usage: /<command> reload
+
+permissions:
+    command.lessrain:
+        description: Reload config
+        default: op

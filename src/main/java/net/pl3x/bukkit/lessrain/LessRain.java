@@ -1,6 +1,9 @@
 package net.pl3x.bukkit.lessrain;
 
+import org.bukkit.ChatColor;
 import org.bukkit.World;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -32,6 +35,16 @@ public class LessRain extends JavaPlugin implements Listener {
         });
         stopTasks.clear();
         getLogger().info(getName() + " disabled");
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
+        if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
+            reloadConfig();
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aLessRain config reloaded"));
+            return true;
+        }
+        return false;
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
