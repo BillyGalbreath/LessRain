@@ -43,7 +43,7 @@ public class LessRain extends JavaPlugin implements Listener {
         if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
             reloadConfig();
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7[&aLessRain&7]&e Config reloaded"));
-            if (!(sender instanceof Player)) {
+            if (sender instanceof Player) {
                 getLogger().info("Config reloaded");
             }
             return true;
