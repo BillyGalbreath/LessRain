@@ -1,4 +1,4 @@
-package me.fritz.seattlesummer;
+package net.pl3x.bukkit.lessrain;
 
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
